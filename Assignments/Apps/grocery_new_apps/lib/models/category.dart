@@ -10,7 +10,7 @@ enum Categories {
   spices,
   convenience,
   hygiene,
-  other
+  other,
 }
 
 class Category {
@@ -19,4 +19,3 @@ class Category {
 
   const Category(this.title, this.color);
 }
-

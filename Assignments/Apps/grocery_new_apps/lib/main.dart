@@ -18,9 +18,9 @@ void main() {
           tileColor: maincolor.onPrimaryContainer,
           textColor: maincolor.onPrimary,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(15)
-          )
-        )
+            borderRadius: BorderRadius.circular(15),
+          ),
+        ),
       ),
       home: GroceryList(),
     ),

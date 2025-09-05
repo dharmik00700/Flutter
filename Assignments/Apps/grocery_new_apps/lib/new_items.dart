@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:grocery_new_apps/data/categories.dart';
 import 'package:grocery_new_apps/models/category.dart';
+import 'package:grocery_new_apps/models/grocery_item.dart';
 
 class NewItems extends StatefulWidget {
   const NewItems({super.key});
@@ -9,12 +10,12 @@ class NewItems extends StatefulWidget {
   State<NewItems> createState() => _NewItemsState();
 }
 
-final formkey = GlobalKey<FormState>();
-var _enteredName = '';
-var _enteredQuantity = 1;
-var _selectedCategory = categories[Categories.vegetables];
-
 class _NewItemsState extends State<NewItems> {
+  final formkey = GlobalKey<FormState>();
+  var _enteredName = '';
+  var _enteredQuantity = 1;
+  var _selectedCategory = categories[Categories.vegetables];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -164,6 +165,16 @@ class _NewItemsState extends State<NewItems> {
                     onPressed: () {
                       if (formkey.currentState!.validate()) {
                         formkey.currentState!.save();
+                        setState(() {
+                          Navigator.of(context).pop(
+                            GroceryItem(
+                              id: DateTime.now().toString(),
+                              name: _enteredName,
+                              quantity: _enteredQuantity,
+                              category: _selectedCategory!,
+                            ),
+                          );
+                        });
                       }
                     },
                     child: Text('Submit', style: TextStyle(fontSize: 18)),
