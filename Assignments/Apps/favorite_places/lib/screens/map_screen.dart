@@ -6,7 +6,7 @@ class MapScreen extends StatefulWidget {
   const MapScreen({
     super.key,
     this.location = const PlaceLocation(
-      latitude: 37.422,
+      latitude: 64.654,
       longitude: -145.32,
       address: "",
     ),

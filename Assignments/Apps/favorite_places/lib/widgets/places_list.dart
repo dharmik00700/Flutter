@@ -1,91 +1,82 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:favorite_places/models/place.dart';
+import 'package:favorite_places/screens/place_detail_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 
-class PlacesList extends StatelessWidget {
+class PlacesList extends StatefulWidget {
   PlacesList({super.key, required this.places});
+
   final List<Place> places;
-  final List<Place> dummyPlaces = [
-    Place(
-      title: 'Our Lady',
-      image: File('assets/images/our_lady.jpg'),
-      location: PlaceLocation(
-        latitude: 21.1702,
-        longitude: 72.8311,
-        address: '800 S Tucker Rd, Lima',
-      ),
-    ),
-    Place(
-      title: 'Path P',
-      image: File('assets/images/path_p.jpg'),
-      location: PlaceLocation(
-        latitude: 34.0522,
-        longitude: -118.2437,
-        address: '7831 N Brown Rd, Little Mountain',
-      ),
-    ),
-    Place(
-      title: 'Our Lady',
-      image: File('assets/images/our_lady.jpg'),
-      location: PlaceLocation(
-        latitude: 21.1702,
-        longitude: 72.8311,
-        address: '800 S Tucker Rd, Lima',
-      ),
-    ),
-    Place(
-      title: 'Path P',
-      image: File('assets/images/path_p.jpg'),
-      location: PlaceLocation(
-        latitude: 34.0522,
-        longitude: -118.2437,
-        address: '7831 N Brown Rd, Little Mountain',
-      ),
-    ),
-  ];
+
+  @override
+  State<PlacesList> createState() => _PlacesListState();
+}
+
+class _PlacesListState extends State<PlacesList> {
+
+
 
   @override
   Widget build(BuildContext context) {
-    if (places.isEmpty) {
+
+    if (widget.places.isEmpty) {
       return Center(
         child: Text(
           'No places added yet.',
-          style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-            color: Theme.of(context).colorScheme.onSurface,
+          style: TextStyle(
+            color: Theme.of(context).brightness == Brightness.dark
+                ? Color.fromARGB(255, 203, 162, 121)
+                : Colors.black,
           ),
         ),
       );
     }
     return ListView.builder(
       itemBuilder: (context, index) => Card(
-        elevation: 10,
+        shadowColor: Theme.of(context).brightness == Brightness.dark
+            ? Color.fromARGB(255, 203, 162, 121)
+            : Colors.black,
+       elevation: 10,
         borderOnForeground: true,
-        color: Colors.black,
+
+        color: Theme
+            .of(context)
+            .brightness == Brightness.dark
+            ? Color.fromARGB(255, 203, 162, 121)
+            : Colors.black,
         margin: EdgeInsets.all(10),
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 12.0),
           child: ListTile(
-            leading: CircleAvatar(backgroundColor: Colors.blue, radius: 26),
-            tileColor: Colors.black,
+            leading: CircleAvatar(
+              backgroundImage: FileImage(widget.places[index].image),
+              radius: 26,
+            ),
+            tileColor: Theme.of(context).brightness == Brightness.dark
+                ? Color.fromARGB(255, 203, 162, 121)
+                : Colors.black,
             title: Text(
-              places[index].title,
+              widget.places[index].title,
               style: TextStyle(
-                color:Color(0xFFc49450),
+                color: Theme.of(context).brightness == Brightness.dark
+                  ? Colors.black
+                  : Color.fromARGB(255, 203, 162, 121),
                 fontWeight: FontWeight.bold,
               ),
             ),
             subtitle: Text(
-              places[index].location.address,
+              widget.places[index].location.address,
               style: TextStyle(color: Colors.white),
             ),
-            onTap: ()=>{
-
-            },
+            onTap: () => {Get.to(PlaceDetailScreen(place: widget.places[index]))},
           ),
         ),
       ),
-      itemCount: places.length,
+      itemCount: widget.places.length,
     );
   }
 }

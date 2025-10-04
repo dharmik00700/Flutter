@@ -1,27 +1,30 @@
+import 'package:favorite_places/screens/adds_places.dart';
+import 'package:get/get.dart';
+
 import 'screens/places_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 final ThemeData lightTheme = ThemeData(
   brightness: Brightness.light,
-  scaffoldBackgroundColor:  Color.fromARGB(255,225, 213, 201 ),
+  scaffoldBackgroundColor: Color.fromARGB(255, 225, 213, 201),
   primarySwatch: Colors.indigo,
 
   textTheme: TextTheme(bodyMedium: TextStyle(color: Colors.black)),
 );
 final theme = ThemeData().copyWith(
   colorScheme: lightTheme.colorScheme.copyWith(),
-  textTheme: GoogleFonts.dancingScriptTextTheme().copyWith(
-    titleSmall: GoogleFonts.dancingScript(fontWeight: FontWeight.bold),
-    titleMedium: GoogleFonts.dancingScript(fontWeight: FontWeight.bold),
-    titleLarge: GoogleFonts.dancingScript(fontWeight: FontWeight.bold),
-  ),
+  // textTheme: GoogleFonts.dancingScriptTextTheme().copyWith(
+  //   titleSmall: GoogleFonts.dancingScript(fontWeight: FontWeight.bold),
+  //   titleMedium: GoogleFonts.dancingScript(fontWeight: FontWeight.bold),
+  //   titleLarge: GoogleFonts.dancingScript(fontWeight: FontWeight.bold),
+  // )
 );
 
 final ThemeData darkTheme = ThemeData(
   brightness: Brightness.dark,
-  floatingActionButtonTheme:FloatingActionButtonThemeData().copyWith(
-    backgroundColor:  Color.fromARGB(255,225, 213, 201 )
+  floatingActionButtonTheme: FloatingActionButtonThemeData().copyWith(
+    backgroundColor: Color.fromARGB(255, 225, 213, 201),
   ),
   primarySwatch: Colors.indigo,
   scaffoldBackgroundColor: Colors.black,
@@ -37,12 +40,13 @@ class Myapp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       themeMode: ThemeMode.system,
       debugShowCheckedModeBanner: false,
       theme: theme,
       darkTheme: darkTheme,
       home: PlacesScreen(),
+      // PlacesScreen(),
     );
   }
 }

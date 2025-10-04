@@ -1,8 +1,10 @@
 import 'dart:convert';
 
 import 'package:favorite_places/models/place.dart';
+import 'package:favorite_places/screens/map_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart' as http;
 import 'package:get/get_core/src/get_main.dart';
 import 'package:location/location.dart';
@@ -65,6 +67,14 @@ class _LocationInputState extends State<LocationInput> {
     saveplace(lat, lng);
   }
 
+  Future<void> selectonmap() async {
+    final pickedlocation = await Get.to<LatLng?>(MapScreen());
+    if (pickedlocation == null) {
+      return;
+    }
+    saveplace(pickedlocation.latitude, pickedlocation.longitude);
+  }
+
   Future<void> saveplace(double lat, double lng) async {
     final url = Uri.parse(
       "https://maps.googleapis.com/maps/api/geocode/json?latlng=$lat,$lng&key=AIzaSyDF0kkbnVgE8g1XUaQ-r6fV5ujufLbkJ20",
@@ -87,10 +97,13 @@ class _LocationInputState extends State<LocationInput> {
   @override
   Widget build(BuildContext context) {
     Widget previewcontent = Text(
-      'No LOCATION SELECTED',
+      'NO LOCATION SELECTED',
       textAlign: TextAlign.center,
-      style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-        color: Theme.of(context).colorScheme.onSurface,
+      style: TextStyle(
+        color: Theme.of(context).brightness == Brightness.dark
+            ?Color.fromARGB(255, 203, 162, 121)
+            : Colors.black,
+        fontWeight: FontWeight.bold,
       ),
     );
     if (isgettinglocation) {
@@ -108,27 +121,54 @@ class _LocationInputState extends State<LocationInput> {
       children: [
         Container(
           decoration: BoxDecoration(
-            border: Border.all(
-              width: 1,
-              color: Theme.of(context).colorScheme.primary.withAlpha(50),
-            ),
+            borderRadius: BorderRadius.circular(21),
+            border: Border.all(width: 5, color: Theme.of(context).brightness == Brightness.dark
+                ? Colors.white.withAlpha(100)
+                : Colors.black.withAlpha(100)),
           ),
           height: 170,
           width: double.infinity,
           alignment: Alignment.center,
-          child: previewcontent,
+          child: ClipRRect(
+            child: previewcontent,
+            borderRadius: BorderRadius.circular(15),
+          ),
         ),
         Row(
           children: [
-            TextButton.icon(
-              onPressed: getcurretlocation,
-              icon: Icon(Icons.location_on),
-              label: Text('Get Current Loaction'),
+            Expanded(
+              child: TextButton.icon(
+                onPressed: getcurretlocation,
+                icon: Icon(Icons.location_on, color:  Theme.of(context).brightness == Brightness.dark
+                    ? Color.fromARGB(255, 203, 162, 121)
+                    : Colors.black,),
+                label: FittedBox(
+                  child: Text(
+                    'Get Current Loaction',
+                    style: TextStyle(
+                      color: Theme.of(context).brightness == Brightness.dark
+                          ? Colors.white
+                          : Colors.black,
+                    ),
+                  ),
+                ),
+              ),
             ),
-            TextButton.icon(
-              onPressed: () {},
-              icon: Icon(Icons.map),
-              label: Text('Selected From Map'),
+            Expanded(
+              child: TextButton.icon(
+                onPressed: selectonmap,
+                icon: Icon(Icons.map,color:  Theme.of(context).brightness == Brightness.dark
+                    ? Color.fromARGB(255, 203, 162, 121)
+                    : Colors.black,),
+                label: Text(
+                  'Selected From Map',
+                  style: TextStyle(
+                    color: Theme.of(context).brightness == Brightness.dark
+                        ? Colors.white
+                        : Colors.black,
+                  ),
+                ),
+              ),
             ),
           ],
         ),

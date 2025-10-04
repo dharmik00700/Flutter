@@ -35,8 +35,19 @@ class _ImageInputsState extends State<ImageInputs> {
   Widget build(BuildContext context) {
     Widget content = TextButton.icon(
       onPressed: takePicture,
-      icon: Icon(Icons.camera_alt),
-      label: Text('Take Pickture'),
+      style: TextButton.styleFrom(overlayColor: Colors.black.withAlpha(100)),
+      icon: Icon(Icons.camera_alt, color:  Theme.of(context).brightness == Brightness.dark
+          ? Color.fromARGB(255, 203, 162, 121)
+          : Colors.black,),
+      label: Text(
+        'Take Pickture',
+        style: TextStyle(
+          color: Theme.of(context).brightness == Brightness.dark
+              ? Color.fromARGB(255, 203, 162, 121)
+              : Colors.black,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
     );
     if (selectedImage != null) {
       content = InkWell(
@@ -52,14 +63,16 @@ class _ImageInputsState extends State<ImageInputs> {
 
     return Container(
       decoration: BoxDecoration(
-        border: Border.all(
-          width: 1,
-          color: Theme.of(context).colorScheme.primary.withAlpha(50),
-        ),
+        color: Colors.transparent,
+        borderRadius: BorderRadius.circular(21),
+        border: Border.all(width: 5, color: Theme.of(context).brightness == Brightness.dark
+            ? Colors.white.withAlpha(100)
+            : Colors.black.withAlpha(100)),
       ),
       height: 250,
       width: double.infinity,
       alignment: Alignment.center,
+      child: ClipRRect(child: content, borderRadius: BorderRadius.circular(15)),
     );
   }
 }

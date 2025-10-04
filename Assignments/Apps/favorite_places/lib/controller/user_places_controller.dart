@@ -6,12 +6,19 @@ import 'package:get/get.dart';
 
 class UserPlacesController extends GetxController {
   final places = List<Place>.empty().obs;
-
   void addPlace(String title, File image, PlaceLocation location) async {
     final appDir = await syspath.getApplicationDocumentsDirectory();
+    places.add(Place(title: title, image: File(image.path), location: location));
+    print("=========== $places =======");
+    print("=========== $appDir =======");
     final filename = path.basename(image.path);
+    print("=========== $appDir =======");
     final copiedFile = await image.copy('$appDir/$filename');
+    print("=========== $appDir =======");
 
-    places.add(Place(title: title, image: copiedFile, location: location));
-  }
+
+
+
+        // Place(title: title, image: copiedFile, location: location));
+        }
 }
