@@ -9,7 +9,6 @@ import 'DashboardScreen.dart';
 import 'mybookingscreen.dart';
 
 
-const String mockApiUrl = 'https://63b4b9f3f7c74b9d6f2b9b3c.mockapi.io/api/services';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

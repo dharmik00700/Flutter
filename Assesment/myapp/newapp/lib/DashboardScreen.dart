@@ -18,6 +18,7 @@ class DashboardScreen extends StatefulWidget {
 }
 
 class _DashboardScreenState extends State<DashboardScreen> {
+  String mockApiUrl = 'https://63b4b9f3f7c74b9d6f2b9b3c.mockapi.io/api/services';
   int _selectedIndex = 0;
   List<Service> _services = [];
   bool _loading = true;
